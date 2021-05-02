@@ -2,10 +2,10 @@
     <div class="card">
         <!-- search input -->
         <channel-input 
-            type="text"
-            placeholder="Add Channel" 
-            v-model="channelInput" 
-            @keyup.enter="addChannel"
+        type="text"
+        placeholder="Add Channel" 
+        v-model="channelInput" 
+        @keyup.enter="addChannel"
         />
         <!-- end search input -->
 
@@ -67,7 +67,7 @@ export default {
 
     data() {
         return {
-            channelInput:'',
+            channelInput:"",
             channels: [],
             changeDetected: false
         }
@@ -85,39 +85,33 @@ export default {
             return icons[newNum]
         },
 
-        scrollToBottom() {
-            const container = this.$el.querySelector(".channel-list")
-            container.scrollTop = container.scrollHeight
-         
-        },
+    
         addChannel() {
           
-            if(this.channelInput.trim() !== "") {
-                var container = this.$el.querySelector(".channel-list")
-                container.scrollTop = container.scrollHeight
-
+            if(this.channelInput.length > 0 && this.channelInput.trim() !== "") {
+            
                 this.channels.push({
                     id: Date.now(),
-                    // name: data,
                     name: this.channelInput,
                     iconType: 'regular',
                     icon: this.generateIcon()
                 })
-                this.changeDetected = true
-                this.channelInput = ''
-                
+                this.channelInput = ""
+                this.detectChange()        
+                 
             }
-
-           
-
+            
         },
+   
 
         deleteChannel(channel) {
             console.log(channel)
             this.channels.splice(this.channels.indexOf(channel), 1);
+            this.detectChange()
+        },
+        detectChange() {
             this.changeDetected = true
         },
-
 
         cancel() {
             this.channels = JSON.parse(localStorage.getItem(STORAGE_KEY) || JSON.stringify(channels))
@@ -126,6 +120,7 @@ export default {
 
         save() {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(this.channels))
+            alert('Data has been saved to localStorage')
         }
 
     }

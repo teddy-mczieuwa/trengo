@@ -7,13 +7,13 @@
             v-bind="$attrs"
             @input="$emit('update', $event.target.value)" 
             v-on="$listeners"
+            :value="value"
         />
     </div>
 </template>
 
 <script>
-//   v-on="$listeners"
-//   v-bind="$attrs"
+
 export default {
     inheritAttrs: false,
     model: {
@@ -24,10 +24,6 @@ export default {
             type: String,
             required: true
         }
-    },
-    methods: {
-
-
     }
 }
 </script>

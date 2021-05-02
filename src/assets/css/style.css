@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+/* html {
+    @apply h-0;
+}
+
+body {
+    @apply h-0;
+} */
+
 .app {
     @apply
     flex
@@ -98,11 +106,12 @@
     @apply
     relative
     w-11/12
-    h-80
-    max-h-80
+    h-96
+    max-h-96
     mx-auto
     px-4
-    overflow-y-scroll;
+    overflow-y-auto;
+    
 }
 
 .channel-list::-webkit-scrollbar {

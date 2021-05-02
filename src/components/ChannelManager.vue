@@ -2,10 +2,10 @@
     <div class="card">
         <!-- search input -->
         <channel-input 
-        type="text"
-        placeholder="Add Channel" 
-        v-model="channelInput" 
-        @keyup.enter="addChannel"
+            type="text"
+            placeholder="Add Channel" 
+            v-model="channelInput" 
+            @keyup.enter="addChannel"
         />
         <!-- end search input -->
 
@@ -85,10 +85,17 @@ export default {
             return icons[newNum]
         },
 
+        scrollToBottom() {
+            const container = this.$el.querySelector(".channel-list")
+            container.scrollTop = container.scrollHeight
+         
+        },
         addChannel() {
-            // console.log(this.channelInput)
           
-            if(this.channelInput.length > 0 && this.channelInput.trim() !== "") {
+            if(this.channelInput.trim() !== "") {
+                var container = this.$el.querySelector(".channel-list")
+                container.scrollTop = container.scrollHeight
+
                 this.channels.push({
                     id: Date.now(),
                     // name: data,
@@ -96,18 +103,13 @@ export default {
                     iconType: 'regular',
                     icon: this.generateIcon()
                 })
+                this.changeDetected = true
                 this.channelInput = ''
+                
             }
 
+           
 
-            // this.channels.push({
-            //     id: Date.now(),
-            //     name: this.channelInput,
-            //     iconType: 'regular',
-            //     icon: this.generateIcon()
-            // })
-            // this.changeDetected = true
-            // this.channelInput = ''
         },
 
         deleteChannel(channel) {
@@ -115,9 +117,7 @@ export default {
             this.channels.splice(this.channels.indexOf(channel), 1);
             this.changeDetected = true
         },
-        detectChange() {
-            this.changeDetected = true
-        },
+
 
         cancel() {
             this.channels = JSON.parse(localStorage.getItem(STORAGE_KEY) || JSON.stringify(channels))

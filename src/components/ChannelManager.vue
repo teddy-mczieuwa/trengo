@@ -1,49 +1,44 @@
 <template>
     <div class="card">
-        <!-- search  -->
-        <add-channel-input v-model="channelInput" @enter="addChannel"/>
-        <!-- end search -->
+        <!-- search input -->
+        <channel-input 
+        type="text"
+        placeholder="Add Channel" 
+        v-model="channelInput" 
+        @keyup.enter="addChannel"
+        />
+        <!-- end search input -->
 
         <!-- sortable list -->
-        <sortable-list v-model="channels" @detectChange="detectChange" :search="channelInput">
-            <div class="channel-list" slot-scope="{items: channels}">
-            <!-- sortable item -->
-            
-            <sortable-item v-for="channel in channels" :key="channel.id">
-                <div class="channel-list-item">
-                    <div class="channel-list-info">
+        <sortable-list 
+        v-model="channels" 
+        @detectChange="detectChange" 
+        :search="channelInput">
+        
+            <div data-cy="channel-list" class="channel-list" slot-scope="{items: channels}">
 
-                        <!-- sortable handle -->
-                        <sortable-handle>
-                            <span class="channel-list-handle">
-                                <base-icon name="grip-vertical" fill="#b8c2cc"/>  
-                            </span>
-                        </sortable-handle>                   
-                        <!-- end sortable handle -->
+                <!-- sortable item -->
+                <sortable-item v-for="channel in channels" :key="channel.id">
+                    <channel-list-item 
+                        @deleteChannel="deleteChannel" 
+                        :channel="channel" 
+                        :name="channel.name" 
+                        :iconType="channel.iconType" 
+                        :icon="channel.icon"
+                    />
+                </sortable-item>
+                <!-- end sortable item -->
 
-                        <span class="channel-icon-tile">
-                            <base-icon  width="1rem" height="1rem" :iconType="channel.iconType" :name="channel.icon" />
-                        </span>
-                        <div class="channel-list-name">{{channel.name}}</div>
-                    </div>
-
-                    <div class="channel-list-action" @click="deleteChannel(channel)">
-                        <span>Remove</span>
-                    </div>
-                </div>
-            </sortable-item>
-            
-            <!-- end sortable item -->
             </div>
         </sortable-list>
         
        <!-- end sortable list -->
 
         <!-- buttons -->
-        <div v-show="changeDetected" class="card__cta">
+        <div v-show="changeDetected" class="buttons">
             <div class="flex justify-end">
-                <button class="card__cta--cancel focus:outline-none btn" @click="cancel">Cancel</button>
-                <button class="card__cta--apply focus:outline-none btn" @click="save">Apply</button>
+                <button data-cy="btn-cancel" class="buttons--cancel focus:outline-none btn" @click="cancel">Cancel</button>
+                <button class="buttons--apply focus:outline-none btn" @click="save">Apply</button>
             </div>
         </div>
         <!-- end buttons -->
@@ -54,42 +49,10 @@
 <script>
 import BaseIcon from './BaseIcon.vue'
 import SortableItem from '@/components/SortableItem'
-import SortableHandle from '@/components/SortableHandle'
 import SortableList from '@/components/SortableList'
-import AddChannelInput from '@/components/AddChannelInput'
-
-const channels = [
-    {
-        id: 5,
-        name: "Whatsapp Business Iceland",
-        iconType:"brands",
-        icon: "whatsapp"
-    },
-    {
-        id: 4,
-        name: "(test) development California",
-        iconType:"regular",
-        icon: "envelope"
-    },
-    {
-        id: 3,
-        name: "Whatsapp business",
-        iconType:"brands",
-        icon: "whatsapp"
-    },
-    {
-        id: 2,
-        name: "Call center",
-        iconType:'solid',
-        icon: "phone-alt"
-    },
-    {
-        id: 1,
-        name: "Team@trengo.com",
-        iconType:'solid',
-        icon: "phone-alt"
-    }  
-]
+import ChannelListItem from '@/components/ChannelListItem'
+import ChannelInput from '@/components/ChannelInput'
+import channels from '@/db'
 
 const STORAGE_KEY = "trengo-channels"
 
@@ -97,9 +60,9 @@ export default {
     components: { 
       BaseIcon,
       SortableItem,
-      SortableHandle,
       SortableList,
-      AddChannelInput
+      ChannelListItem,
+      ChannelInput
     },
 
     data() {
@@ -123,17 +86,32 @@ export default {
         },
 
         addChannel() {
-            this.channels.push({
-                id: Date.now(),
-                name: this.channelInput,
-                iconType: 'regular',
-                icon: this.generateIcon()
-            })
-            this.changeDetected = true
-            this.channelInput = ''
-            console.log(this.channelInput)
+            // console.log(this.channelInput)
+          
+            if(this.channelInput.length > 0 && this.channelInput.trim() !== "") {
+                this.channels.push({
+                    id: Date.now(),
+                    // name: data,
+                    name: this.channelInput,
+                    iconType: 'regular',
+                    icon: this.generateIcon()
+                })
+                this.channelInput = ''
+            }
+
+
+            // this.channels.push({
+            //     id: Date.now(),
+            //     name: this.channelInput,
+            //     iconType: 'regular',
+            //     icon: this.generateIcon()
+            // })
+            // this.changeDetected = true
+            // this.channelInput = ''
         },
+
         deleteChannel(channel) {
+            console.log(channel)
             this.channels.splice(this.channels.indexOf(channel), 1);
             this.changeDetected = true
         },

@@ -1,0 +1,163 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.app {
+    @apply
+    flex
+    justify-center
+    items-center
+
+    w-full 
+    h-screen;
+}
+
+.card {
+    /* box-model */
+    width: 35.3rem;
+
+    @apply 
+    text-gray-900
+
+    border
+    rounded-lg
+    shadow-lg;
+}
+
+.card__cta {
+    @apply
+    w-10/12
+    mx-auto
+    mt-2
+    mb-6;
+}
+
+.card__cta--cancel {
+    @apply
+    py-1 
+    w-20
+
+    rounded-full 
+    border 
+    border-gray-200;
+}
+
+.card__cta--apply {
+    @apply
+    ml-4
+    py-1 
+    w-20
+
+    text-gray-50 
+
+    rounded-full 
+    bg-gray-900 
+    border-gray-100 border;
+}
+
+.channel-search {
+    /* box-model */
+    width: 95%;
+
+    @apply
+    relative
+    overflow-hidden
+
+    my-4
+    py-1
+    mx-auto 
+    h-8
+
+    border  
+    rounded-full;
+}
+
+.channel-search__icon {
+    @apply
+    absolute 
+    top-2 
+    left-4;
+}
+
+.channel-search__input {
+    /* box-model */
+    width: 90%;
+
+    @apply
+    mx-10
+    h-full 
+    focus:outline-none;
+}
+
+.channel-search__input::placeholder {
+    @apply
+    text-gray-700;
+}
+
+.channel-list {
+    @apply
+    relative
+    w-11/12
+    h-80
+    max-h-80
+    mx-auto
+    px-4
+    overflow-y-scroll;
+}
+
+.channel-list::-webkit-scrollbar {
+    @apply
+    w-1
+    bg-gray-100;   
+
+}
+.channel-list::-webkit-scrollbar-track {
+    @apply
+    bg-gray-50;
+}
+
+.channel-list::-webkit-scrollbar-thumb {
+    @apply
+    bg-gray-100;
+}
+
+.channel-list-item {
+    /* visual */
+    background-color: white;
+    @apply
+    flex
+    items-center
+    justify-between;
+}
+
+.channel-list-info {
+    @apply
+    flex
+    items-center
+
+    w-4/5
+    py-4;
+}
+
+.channel-list-action {
+   @apply
+   font-normal
+   text-gray-500
+   cursor-pointer;
+   
+
+}
+
+.channel-icon-tile {
+    @apply 
+    p-2 
+    mx-4
+    rounded-lg 
+    bg-gray-50;
+
+}
+
+.channel-list-handle {
+    @apply
+    cursor-move;
+}

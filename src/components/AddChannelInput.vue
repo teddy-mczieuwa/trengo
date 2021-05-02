@@ -17,8 +17,8 @@ export default {
             this.$emit('input', event.target.value)
         },
 
-        enter() {
-            this.$emit('enter')
+        enter(event) {
+            this.$emit('enter', event.target.value)
         }
     }
 }

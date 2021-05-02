@@ -5,7 +5,7 @@
         <!-- end search -->
 
         <!-- sortable list -->
-        <sortable-list v-model="channels" :search="channelInput">
+        <sortable-list v-model="channels" @detectChange="detectChange" :search="channelInput">
             <div class="channel-list" slot-scope="{items: channels}">
             <!-- sortable item -->
             
@@ -40,7 +40,7 @@
        <!-- end sortable list -->
 
         <!-- buttons -->
-        <div class="card__cta">
+        <div v-show="changeDetected" class="card__cta">
             <div class="flex justify-end">
                 <button class="card__cta--cancel focus:outline-none btn" @click="cancel">Cancel</button>
                 <button class="card__cta--apply focus:outline-none btn" @click="save">Apply</button>
@@ -105,7 +105,8 @@ export default {
     data() {
         return {
             channelInput:'',
-            channels: []
+            channels: [],
+            changeDetected: false
         }
     },
 
@@ -128,15 +129,21 @@ export default {
                 iconType: 'regular',
                 icon: this.generateIcon()
             })
+            this.changeDetected = true
             this.channelInput = ''
             console.log(this.channelInput)
         },
         deleteChannel(channel) {
             this.channels.splice(this.channels.indexOf(channel), 1);
+            this.changeDetected = true
+        },
+        detectChange() {
+            this.changeDetected = true
         },
 
         cancel() {
             this.channels = JSON.parse(localStorage.getItem(STORAGE_KEY) || JSON.stringify(channels))
+            this.changeDetected = false
         },
 
         save() {

@@ -16,7 +16,7 @@
             <div class="channel-list-name">{{name}}</div>
         </div>
 
-        <div class="channel-list-action" @click="deleteChannel(channel)">
+        <div data-cy="remove-item" class="channel-list-action" @click="deleteChannel(channel)">
             <span>Remove</span>
         </div>
     </div>

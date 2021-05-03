@@ -37,6 +37,7 @@ export default {
     },
 
     computed: {
+        
         filteredValues() {
             return this.value.filter(value => {
                 return value.name.toLowerCase().startsWith(this.search.toLowerCase())

@@ -2,14 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* html {
-    @apply h-0;
-}
-
-body {
-    @apply h-0;
-} */
-
 .app {
     @apply
     flex
@@ -127,7 +119,7 @@ body {
 
 .channel-list::-webkit-scrollbar-thumb {
     @apply
-    bg-gray-100;
+    bg-gray-200;
 }
 
 .channel-list-item {
@@ -169,4 +161,8 @@ body {
 .channel-list-handle {
     @apply
     cursor-move;
+}
+
+.display {
+    @apply block;
 }
